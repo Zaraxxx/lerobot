@@ -80,6 +80,7 @@ class MetricsTracker:
         "_batch_size",
         "_num_frames",
         "_avg_samples_per_ep",
+        "_total_steps",
         "metrics",
         "steps",
         "samples",
@@ -95,12 +96,14 @@ class MetricsTracker:
         num_episodes: int,
         metrics: dict[str, AverageMeter],
         initial_step: int = 0,
+        total_steps: int | None = None,
         accelerator: Callable | None = None,
     ):
         self.__dict__.update(dict.fromkeys(self.__keys__))
         self._batch_size = batch_size
         self._num_frames = num_frames
         self._avg_samples_per_ep = num_frames / num_episodes
+        self._total_steps = total_steps
         self.metrics = metrics
 
         self.steps = initial_step
@@ -145,6 +148,11 @@ class MetricsTracker:
             f"ep:{format_big_number(self.episodes)}",
             # number of time all unique samples are seen
             f"epch:{self.epochs:.2f}",
+            *(
+                [f"pct:{(self.steps / self._total_steps) * 100:.1f}%"]
+                if self._total_steps
+                else []
+            ),
             *[str(m) for m in self.metrics.values()],
         ]
         return " ".join(display_list)

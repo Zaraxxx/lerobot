@@ -386,6 +386,7 @@ def train(cfg: TrainPipelineConfig, accelerator: Accelerator | None = None):
         dataset.num_episodes,
         train_metrics,
         initial_step=step,
+        total_steps=cfg.steps,
         accelerator=accelerator,
     )
 
