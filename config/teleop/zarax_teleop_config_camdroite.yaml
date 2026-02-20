@@ -1,4 +1,5 @@
-# lerobot-teleoperate --config_path ".\config\teleop\zarax_teleop_config_camdroite.yaml"
+# lerobot-teleoperate --config_path "C:\XLeRobot\lerobot\zarax_teleop_config_camdroite.yaml"
+
 
 display_data: true
 
@@ -13,6 +14,7 @@ robot:
       fps: 30
       width: 640
       height: 480
+      backend: DSHOW
 
 teleop:
   type: so101_leader

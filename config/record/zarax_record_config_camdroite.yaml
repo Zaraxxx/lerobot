@@ -1,5 +1,3 @@
-# lerobot-record --config_path .\config\record\zarax_record_config_camdroite.yaml
-
 display_data: true
 
 robot:
@@ -13,12 +11,12 @@ robot:
       fps: 30
       width: 640
       height: 480
+      backend: DSHOW
 
 teleop:
   type: so101_leader
   port: COM8
   id: zarax
-
 
 dataset:
   repo_id: Zarax/zarax-demo
@@ -27,5 +25,3 @@ dataset:
   fps: 30
   push_to_hub: true
   video: true
-
-resume: true

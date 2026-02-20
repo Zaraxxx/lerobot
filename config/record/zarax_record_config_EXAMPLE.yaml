@@ -27,6 +27,7 @@ robot:
       fps: 30
       width: 640
       height: 480
+      backend: DSHOW            # Backend OpenCV (DSHOW pour Windows, ANY pour Linux)
     # camera_1:                   # Ajouter d'autres caméras si nécessaire
     #   type: opencv
     #   index_or_path: 3

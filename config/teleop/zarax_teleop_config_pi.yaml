@@ -1,0 +1,36 @@
+# ========================================================================
+# CONFIGURATION TELEOPERATION ZARAX - RASPBERRY PI 5 (Linux)
+# ========================================================================
+# Usage:
+#   lerobot-teleoperate --config_path config/teleop/zarax_teleop_config_pi.yaml
+#
+# Les ports /dev/ttyUSB* et /dev/video* doivent etre adaptes selon la
+# detection sur le Pi. Utiliser:
+#   ls /dev/ttyUSB* /dev/ttyACM*
+#   v4l2-ctl --list-devices
+# ========================================================================
+
+display_data: true
+
+robot:
+  type: so101_follower
+  port: /dev/ttyUSB0              # A adapter selon detection
+  id: zarax
+  cameras:
+    camera_0:
+      type: opencv
+      index_or_path: /dev/video0  # A adapter selon detection
+      fps: 30
+      width: 640
+      height: 480
+    camera_1:
+      type: opencv
+      index_or_path: /dev/video2  # A adapter selon detection
+      fps: 30
+      width: 640
+      height: 480
+
+teleop:
+  type: so101_leader
+  port: /dev/ttyUSB1              # A adapter selon detection
+  id: zarax

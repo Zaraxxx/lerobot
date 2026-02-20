@@ -1,180 +1,83 @@
 # X le Robot - Configuration et Progression
 
 ## Contexte
-"X le robot" - Robot avec deux bras (leader et follower) utilisant LeRobot (Hugging Face) pour la téléopération et la collecte de données.
+"X le robot" - Robot avec deux bras (leader et follower) utilisant LeRobot (Hugging Face) pour la teleoperation et la collecte de donnees.
 
 ---
 
-## Statut actuel - 2026-02-05 (SESSION 3)
+## Statut actuel - 2026-02-20 (SESSION 4)
 
-### Ce qui est fait ✅
-1. **Montage du robot** : Assemblage complet ✅
-2. **Configuration des bras** : ✅
-   - Bras leader : calibré (COM8)
-   - Bras follower : calibré (COM7) avec ID "zarax"
-   - Calibration sauvegardée : `~/.cache/huggingface/lerobot/calibration/robots/so_follower/zarax.json`
-3. **Synchronisation** : Les deux bras fonctionnent en mode miroir ✅
-4. **Caméras** : ✅
-   - Configurées : USB indice 1 (640x480, 30 FPS)
-   - Testées et fonctionnelles avec OpenCV
-5. **Téléopération complète** : ✅
-   - Bras leader et follower synchronisés
-   - Flux vidéo caméra affichés en temps réel
-   - Visualisation Rerun activée (`display_data: true`)
-   - Pas de déconnexions lors du test
-6. **Collecte de données** : ✅
-   - Dataset enregistré : `Zarax/zarax-demo` (9 épisodes, 3,491 frames)
+### Ce qui est fait
+1. **Montage du robot** : Assemblage complet
+2. **Configuration des bras** :
+   - Bras leader : calibre (COM8)
+   - Bras follower : calibre (COM7) avec ID "zarax"
+   - Calibration sauvegardee : `~/.cache/huggingface/lerobot/calibration/robots/so_follower/zarax.json`
+3. **Synchronisation** : Les deux bras fonctionnent en mode miroir
+4. **Cameras** :
+   - Configurees : USB indice 1 (640x480, 30 FPS)
+   - Testees et fonctionnelles avec OpenCV
+5. **Teleoperation complete** :
+   - Bras leader et follower synchronises
+   - Flux video camera affiches en temps reel
+   - Visualisation Rerun activee (`display_data: true`)
+   - Pas de deconnexions lors du test
+6. **Collecte de donnees** :
+   - Dataset enregistre : `Zarax/zarax-demo` (9 episodes, 3,491 frames)
    - Fichier de config : `config/record/zarax_record_config_camdroite.yaml`
-7. **Entraînement du modèle** : ✅
-   - Modèle ACT entraîné sur 20,000 steps
+7. **Entrainement du modele** :
+   - Modele ACT entraine sur 20,000 steps
    - Loss finale : 0.035
-   - Modèle uploadé : `Zarax/act-zarax-v1`
+   - Modele uploade : `Zarax/act-zarax-v1`
    - Checkpoint local : `outputs/train/act_zarax_v1/checkpoints/020000/`
-8. **Déploiement** : ✅
-   - Robot fonctionne en mode autonome avec le modèle entraîné
+8. **Deploiement** :
+   - Robot fonctionne en mode autonome avec le modele entraine
    - Script simple : `run_model.bat`
    - Config : `config/eval/zarax_eval_simple.yaml`
+9. **Setup RPi5** : En cours
+   - Configs Pi creees, script d'installation pret
+   - Voir `plans/rpi5_setup.md`
 
 ### Environnement
-- Windows 10/11
-- Python 3.10 (conda: `lerobot`)
-- LeRobot 0.4.4
-- Caméras USB : indices 2 et 3 (640x480, 30 FPS)
+- **Windows** : Windows 10/11, Python 3.10 (conda: `lerobot`), LeRobot main (post-v0.4.4)
+- **Raspberry Pi 5** : Setup en cours (voir `plans/rpi5_setup.md`)
+- Cameras USB : indice 1 (640x480, 30 FPS)
 - Robot ID : "zarax"
 
 ---
 
-## 📊 État de la progression
+## Progression
 
-| Étape | Statut | Description |
+| Etape | Statut | Description |
 |-------|--------|-------------|
-| 1. Montage | ✅ Complété | Robot assemblé et opérationnel |
-| 2. Calibration | ✅ Complété | Bras calibrés (zarax.json) |
-| 3. Téléopération | ✅ Complété | Leader/Follower synchronisés avec caméras |
-| 4. Collecte de données | ✅ Complété | 9 épisodes enregistrés (Zarax/zarax-demo) |
-| 5. Entraînement | ✅ Complété | Modèle ACT entraîné (Zarax/act-zarax-v1) |
-| 6. Déploiement | ✅ Complété | Robot fonctionne en mode autonome |
+| 1. Montage | Complete | Robot assemble et operationnel |
+| 2. Calibration | Complete | Bras calibres (zarax.json) |
+| 3. Teleoperation | Complete | Leader/Follower synchronises avec cameras |
+| 4. Collecte de donnees | Complete | 9 episodes enregistres (Zarax/zarax-demo) |
+| 5. Entrainement | Complete | Modele ACT entraine (Zarax/act-zarax-v1) |
+| 6. Deploiement | Complete | Robot fonctionne en mode autonome |
+| 7. Setup RPi5 | En cours | Installer LeRobot sur Raspberry Pi 5 |
 
 ---
 
-## Prochaines étapes - Collecte de données
+## Fichiers de configuration
 
-### 1. Téléopération avec caméras (lerobot-teleoperate) ✅ COMPLÉTÉ
-**Status :** Fonctionnel et testé avec succès
-
-**Fichier de configuration :**
-- Localisation : `C:\XLeRobot\lerobot\zarax_teleop_config.yaml`
-- Paramètres activés : `display_data: true` pour afficher les vidéos
-
-**Résultats du test :**
-- ✅ Bras leader et follower synchronisés
-- ✅ 2 flux vidéo affichés en temps réel
-- ✅ Visualisation Rerun active
-- ✅ Pas de déconnexions
-- ✅ Boucle de téléopération stable (32 Hz)
-
-### 2. Collecte de données (lerobot-record) - ⏭️ PROCHAINE ÉTAPE
-**Status :** À faire
-
-Enregistrer des démonstrations de mouvement du robot pour l'apprentissage par imitation.
-
-**Prérequis :**
-- Compte Hugging Face (https://huggingface.co/join)
-- Token HF pour authentification
-
-**Commande :**
-```bash
-lerobot-record --config_path C:\XLeRobot\lerobot\zarax_teleop_config.yaml --repo-id <HF_USERNAME>/zarax-demo --num-episodes 5
+### Structure des configs
 ```
-
-**Ce que ça fait :**
-- Ouvre la fenêtre de téléopération
-- Enregistre 5 épisodes de démonstration
-- Capture les images des 2 caméras
-- Crée un dataset Hugging Face
-
-### 3. Entraînement du modèle (lerobot-train) ✅ COMPLÉTÉ
-**Status :** Complété avec succès
-
-**Dataset utilisé :** `Zarax/zarax-demo` (9 épisodes)
-**Modèle :** ACT (Action Chunking with Transformers)
-**Configuration :** `config/training/zarax_train_config_act.yaml`
-**Résultats :**
-- 20,000 training steps
-- Loss finale : 0.035
-- Modèle uploadé sur HuggingFace : `Zarax/act-zarax-v1`
-
-### 4. Déploiement et test du modèle ✅ COMPLÉTÉ
-**Status :** Solution finale implémentée
-
-**LA SOLUTION SIMPLE : Script run_model.bat**
-
-Pour faire tourner le robot avec le modèle entraîné, utilise simplement :
-```bash
-.\run_model.bat
+config/
+  teleop/
+    zarax_teleop_config_2cam.yaml       # Windows, 2 cameras
+    zarax_teleop_config_camdroite.yaml   # Windows, 1 camera (principal)
+    zarax_teleop_config_nocam.yaml       # Windows, sans cameras
+    zarax_teleop_config_pi.yaml          # Raspberry Pi 5
+    zarax_teleop_config_EXAMPLE.yaml     # Reference complete commentee
+  record/
+    zarax_record_config_camdroite.yaml   # Windows, 1 camera
+    zarax_record_config_pi.yaml          # Raspberry Pi 5
+    zarax_record_config_EXAMPLE.yaml     # Reference complete commentee
+  eval/
+    zarax_eval_simple.yaml               # Evaluation avec modele ACT
 ```
-
-**Ce que fait le script :**
-- ✅ Nettoie automatiquement le dataset de test précédent
-- ✅ Lance le robot avec le modèle entraîné
-- ✅ N'upload JAMAIS sur HuggingFace
-- ✅ Toujours la même commande, fonctionne à chaque fois
-
-**Fichiers impliqués :**
-- Script : `run_model.bat`
-- Configuration : `config/eval/zarax_eval_simple.yaml`
-
-**Important découvert :**
-- LeRobot n'a pas de mode "inference-only" natif
-- `num_episodes: 0` termine immédiatement sans faire tourner le robot
-- Il FAUT `num_episodes >= 1` pour que le robot tourne
-- La solution : script wrapper qui gère le nettoyage automatique
-
----
-
-## Configuration du robot
-
-### Fichier de configuration YAML
-**Localisation :** `C:\XLeRobot\lerobot\zarax_teleop_config.yaml`
-
-**Contient :**
-- Configuration du robot follower (SO101, COM7, ID=zarax)
-- Configuration du robot leader (SO101, COM8, ID=zarax)
-- Caméras OpenCV (indices 2, 3 @ 640x480, 30 FPS)
-- Calibration automatiquement chargée depuis zarax.json
-
-**Structure YAML actuelle :**
-```yaml
-display_data: true
-
-robot:
-  type: so101_follower
-  port: COM7
-  id: zarax
-  cameras:
-    camera_0:
-      type: opencv
-      index_or_path: 2
-      fps: 30
-      width: 640
-      height: 480
-    camera_1:
-      type: opencv
-      index_or_path: 3
-      fps: 30
-      width: 640
-      height: 480
-
-teleop:
-  type: so101_leader
-  port: COM8
-  id: zarax
-```
-
-**Calibration :**
-- Sauvegardée automatiquement lors de `lerobot-calibrate --robot.id=zarax`
-- Chemin : `~/.cache/huggingface/lerobot/calibration/robots/so_follower/zarax.json`
-- Chargée automatiquement au démarrage du robot
 
 ---
 
@@ -182,61 +85,57 @@ teleop:
 
 ### Environnement
 ```bash
-# Activer conda
+# Windows (conda)
 conda activate lerobot
-
-# Aller au repo
 cd C:\XLeRobot\lerobot
+
+# Raspberry Pi (venv)
+cd ~/lerobot_pi/lerobot && source ../venv/bin/activate
 ```
 
 ### Diagnostic
 ```bash
-# Vérifier les caméras
 lerobot-find-cameras opencv
-
-# Test rapide OpenCV
-python -c "import cv2; cap = cv2.VideoCapture(2, cv2.CAP_DSHOW); print('Camera 2:', cap.isOpened()); cap.release()"
+lerobot-find-port
 ```
 
-### LeRobot commands
-
-#### Téléopération avec caméras (Recommandé)
+### Teleoperation
 ```bash
-# Utiliser le fichier de configuration YAML
-lerobot-teleoperate --config_path C:\XLeRobot\lerobot\zarax_teleop_config.yaml
+# Windows - 1 camera
+lerobot-teleoperate --config_path config/teleop/zarax_teleop_config_camdroite.yaml
+
+# Raspberry Pi
+lerobot-teleoperate --config_path config/teleop/zarax_teleop_config_pi.yaml
 ```
 
-#### Calibration du robot
+### Collecte de donnees
 ```bash
-# Calibrer les bras (si nécessaire)
-lerobot-calibrate --robot.type=so101_follower --robot.port=COM7 --robot.id=zarax
+lerobot-record --config_path config/record/zarax_record_config_camdroite.yaml
 ```
 
-#### Collecte de données
+### Deploiement modele
 ```bash
-# Enregistrer des démonstrations
-lerobot-record --config_path C:\XLeRobot\lerobot\zarax_teleop_config.yaml --repo-id <HF_USERNAME>/zarax-demo
-```
-
-#### Entraînement
-```bash
-# Entraîner un modèle
-lerobot-train --help
+.\run_model.bat
 ```
 
 ---
 
 ## Notes techniques
 
-⚠️ **Backend OpenCV** : Windows utilise DirectShow (CAP_DSHOW) - configuré dans `src\lerobot\cameras\utils.py`
+- **Backend OpenCV Windows** : Utiliser `backend: DSHOW` dans le YAML (DirectShow). Depuis la derniere mise a jour upstream, le backend est configurable par camera dans le YAML (plus de modification de `utils.py`)
+- **Backend OpenCV Linux/Pi** : `backend: ANY` (defaut, pas besoin de le specifier)
+- **Cv2Backends disponibles** : ANY, V4L2, DSHOW, PVAPI, ANDROID, AVFOUNDATION, MSMF (voir `src/lerobot/cameras/configs.py`)
+- **Calibration** : Sauvegardee automatiquement dans zarax.json
+- **Cameras** : OpenCV camera config accepte `index_or_path` (entier ou chemin vers fichier video)
+- **Format CLI** : Utiliser `--config_path` (underscore) et non `--config-path` (tiret)
+- **Deploiement** : LeRobot n'a pas de mode "inference-only" natif, il faut `num_episodes >= 1`
 
-⚠️ **Configuration** : Utiliser un fichier YAML pour la configuration complète avec caméras (plus flexible que CLI)
+---
 
-⚠️ **Calibration** : Sauvegardée automatiquement dans zarax.json lors du premier démarrage ou après `lerobot-calibrate`
+## Plans et documentation
 
-⚠️ **Caméras** : OpenCV camera config accepte `index_or_path` (entier ou chemin vers fichier vidéo)
-
-⚠️ **Format CLI** : Utiliser `--config_path` (underscore) et non `--config-path` (tiret)
+- `plans/rpi5_setup.md` - Plan d'installation sur Raspberry Pi 5
+- `scripts/setup_pi.sh` - Script d'installation automatise pour RPi5
 
 ---
 

@@ -1,5 +1,3 @@
-# lerobot-teleoperate --config_path ".\config\teleop\zarax_teleop_config_nocam.yaml"
-
 display_data: true
 
 robot:

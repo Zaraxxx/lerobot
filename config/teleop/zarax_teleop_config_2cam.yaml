@@ -1,5 +1,3 @@
-# lerobot-teleoperate --config_path ".\config\teleop\zarax_teleop_config_2cam.yaml"
-
 display_data: true
 
 robot:
@@ -9,16 +7,18 @@ robot:
   cameras:
     camera_0:
       type: opencv
-      index_or_path: 1
+      index_or_path: 2
       fps: 30
       width: 640
       height: 480
+      backend: DSHOW
     camera_1:
       type: opencv
       index_or_path: 3
       fps: 30
       width: 640
       height: 480
+      backend: DSHOW
 
 teleop:
   type: so101_leader
