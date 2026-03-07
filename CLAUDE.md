@@ -5,143 +5,115 @@
 
 ---
 
-## Statut actuel - 2026-02-20 (SESSION 4)
+## Statut actuel - 2026-03-07 (SESSION 5)
 
 ### Ce qui est fait
 1. **Montage du robot** : Assemblage complet
 2. **Configuration des bras** :
-   - Bras leader : calibre (COM8)
-   - Bras follower : calibre (COM7) avec ID "zarax"
+   - Bras 1 : 4 moteurs (ID 1-4), 2 moteurs manquants (5, 6)
+   - Bras 2 : 6 moteurs (ID 1-6), complet et fonctionnel
    - Calibration sauvegardee : `~/.cache/huggingface/lerobot/calibration/robots/so_follower/zarax.json`
-3. **Synchronisation** : Les deux bras fonctionnent en mode miroir
-4. **Cameras** :
-   - Configurees : USB indice 1 (640x480, 30 FPS)
-   - Testees et fonctionnelles avec OpenCV
-5. **Teleoperation complete** :
-   - Bras leader et follower synchronises
-   - Flux video camera affiches en temps reel
-   - Visualisation Rerun activee (`display_data: true`)
-   - Pas de deconnexions lors du test
-6. **Collecte de donnees** :
-   - Dataset enregistre : `Zarax/zarax-demo` (9 episodes, 3,491 frames)
-   - Fichier de config : `config/record/zarax_record_config_camdroite.yaml`
-7. **Entrainement du modele** :
-   - Modele ACT entraine sur 20,000 steps
-   - Loss finale : 0.035
-   - Modele uploade : `Zarax/act-zarax-v1`
-   - Checkpoint local : `outputs/train/act_zarax_v1/checkpoints/020000/`
-8. **Deploiement** :
-   - Robot fonctionne en mode autonome avec le modele entraine
-   - Script simple : `run_model.bat`
-   - Config : `config/eval/zarax_eval_simple.yaml`
-9. **Setup RPi5** : En cours
-   - Configs Pi creees, script d'installation pret
-   - Voir `plans/rpi5_setup.md`
+   - Calibration leader : `~/.cache/huggingface/lerobot/calibration/teleoperators/so_leader/zarax.json`
+3. **RPi5 operationnel** :
+   - PyTorch 2.10.0 (CPU), OpenCV 4.12.0, LeRobot 0.4.4
+   - Python 3.13, venv : `~/lerobot_pi/venv/`
+   - Claude Code installe
+4. **Manette Xbox** :
+   - Xbox 360 Wireless Receiver sur `/dev/input/event5` et `/dev/input/js0`
+   - Script de controle : `~/lerobot_pi/xbox_control.py`
+   - Teste et fonctionnel avec le bras 2 (6 moteurs)
+   - Mapping : stick G = shoulder_pan/lift, stick D = wrist_roll/flex, LT/RT = gripper, D-pad = elbow
+   - SPEED = 1.0, boucle 30Hz, auto-reconnect
+   - NOTE : la manette met du temps a se synchroniser, se deconnecte si inactive
+5. **Collecte de donnees (Windows)** :
+   - Dataset : `Zarax/zarax-demo` (9 episodes, 3,491 frames)
+6. **Modele ACT (Windows)** :
+   - Entraine sur 20,000 steps, loss 0.035
+   - Uploade : `Zarax/act-zarax-v1`
 
-### Environnement
-- **Windows** : Windows 10/11, Python 3.10 (conda: `lerobot`), LeRobot main (post-v0.4.4)
-- **Raspberry Pi 5** : Setup en cours (voir `plans/rpi5_setup.md`)
-- Cameras USB : indice 1 (640x480, 30 FPS)
-- Robot ID : "zarax"
+### A faire
+- Changer le mapping de la manette Xbox (a definir)
+- Ajouter le controle du deuxieme bras (4 moteurs)
+- Reduire la vitesse si necessaire
+
+### Environnement Raspberry Pi
+- **OS** : Linux Debian aarch64, Kernel 6.12.47
+- **Hostname** : PiRobot
+- **User** : zarax
+- **Repo** : `~/lerobot_pi/lerobot/` (clone de https://github.com/Zaraxxx/lerobot)
+- **Venv** : `source ~/lerobot_pi/venv/bin/activate`
+- **Ports serie** : `/dev/ttyACM0` (change selon branchement)
+- **Moteurs** : STS3215 (model 777), Feetech
+
+### Environnement Windows (PC principal)
+- Windows 11, Python 3.10 (conda: lerobot)
+- SSH vers Pi : `ssh -i ~/.ssh/id_ed25519_pi zarax@192.168.1.78`
+- Acces SSH uniquement depuis le PC Flav-Laptop
 
 ---
 
-## Progression
+## API LeRobot (reference rapide)
 
-| Etape | Statut | Description |
-|-------|--------|-------------|
-| 1. Montage | Complete | Robot assemble et operationnel |
-| 2. Calibration | Complete | Bras calibres (zarax.json) |
-| 3. Teleoperation | Complete | Leader/Follower synchronises avec cameras |
-| 4. Collecte de donnees | Complete | 9 episodes enregistres (Zarax/zarax-demo) |
-| 5. Entrainement | Complete | Modele ACT entraine (Zarax/act-zarax-v1) |
-| 6. Deploiement | Complete | Robot fonctionne en mode autonome |
-| 7. Setup RPi5 | En cours | Installer LeRobot sur Raspberry Pi 5 |
+```python
+from lerobot.motors.feetech import FeetechMotorsBus
+from lerobot.motors.motors_bus import Motor, MotorCalibration, MotorNormMode
+
+# Creer un bus moteur
+motors = {"shoulder_pan": Motor(1, "sts3215", MotorNormMode.RANGE_M100_100)}
+calibration = {"shoulder_pan": MotorCalibration(id=1, drive_mode=0, homing_offset=272, range_min=861, range_max=3364)}
+bus = FeetechMotorsBus(port="/dev/ttyACM0", motors=motors, calibration=calibration)
+bus.connect()
+
+# Lire/ecrire
+pos = bus.read("Present_Position", "shoulder_pan")
+bus.write("Goal_Position", "shoulder_pan", 50.0)  # write(registre, nom_moteur, valeur)
+bus.disconnect()
+```
+
+---
+
+## Scripts utiles
+
+### Controle manette Xbox
+```bash
+cd ~/lerobot_pi/lerobot && source ../venv/bin/activate
+python3 ~/lerobot_pi/xbox_control.py
+```
+
+### Diagnostic
+```bash
+# Ports serie
+ls /dev/ttyACM* /dev/ttyUSB*
+
+# Manette
+cat /proc/bus/input/devices | grep -A 4 xbox
+
+# Cameras
+v4l2-ctl --list-devices
+```
 
 ---
 
 ## Fichiers de configuration
 
-### Structure des configs
 ```
 config/
   teleop/
-    zarax_teleop_config_2cam.yaml       # Windows, 2 cameras
-    zarax_teleop_config_camdroite.yaml   # Windows, 1 camera (principal)
-    zarax_teleop_config_nocam.yaml       # Windows, sans cameras
     zarax_teleop_config_pi.yaml          # Raspberry Pi 5
-    zarax_teleop_config_EXAMPLE.yaml     # Reference complete commentee
+    zarax_teleop_config_camdroite.yaml   # Windows, 1 camera
+    zarax_teleop_config_2cam.yaml        # Windows, 2 cameras
   record/
-    zarax_record_config_camdroite.yaml   # Windows, 1 camera
     zarax_record_config_pi.yaml          # Raspberry Pi 5
-    zarax_record_config_EXAMPLE.yaml     # Reference complete commentee
+    zarax_record_config_camdroite.yaml   # Windows, 1 camera
   eval/
     zarax_eval_simple.yaml               # Evaluation avec modele ACT
 ```
 
 ---
 
-## Commandes utiles
-
-### Environnement
-```bash
-# Windows (conda)
-conda activate lerobot
-cd C:\XLeRobot\lerobot
-
-# Raspberry Pi (venv)
-cd ~/lerobot_pi/lerobot && source ../venv/bin/activate
-```
-
-### Diagnostic
-```bash
-lerobot-find-cameras opencv
-lerobot-find-port
-```
-
-### Teleoperation
-```bash
-# Windows - 1 camera
-lerobot-teleoperate --config_path config/teleop/zarax_teleop_config_camdroite.yaml
-
-# Raspberry Pi
-lerobot-teleoperate --config_path config/teleop/zarax_teleop_config_pi.yaml
-```
-
-### Collecte de donnees
-```bash
-lerobot-record --config_path config/record/zarax_record_config_camdroite.yaml
-```
-
-### Deploiement modele
-```bash
-.\run_model.bat
-```
-
----
-
 ## Notes techniques
 
-- **Backend OpenCV Windows** : Utiliser `backend: DSHOW` dans le YAML (DirectShow). Depuis la derniere mise a jour upstream, le backend est configurable par camera dans le YAML (plus de modification de `utils.py`)
-- **Backend OpenCV Linux/Pi** : `backend: ANY` (defaut, pas besoin de le specifier)
-- **Cv2Backends disponibles** : ANY, V4L2, DSHOW, PVAPI, ANDROID, AVFOUNDATION, MSMF (voir `src/lerobot/cameras/configs.py`)
-- **Calibration** : Sauvegardee automatiquement dans zarax.json
-- **Cameras** : OpenCV camera config accepte `index_or_path` (entier ou chemin vers fichier video)
-- **Format CLI** : Utiliser `--config_path` (underscore) et non `--config-path` (tiret)
-- **Deploiement** : LeRobot n'a pas de mode "inference-only" natif, il faut `num_episodes >= 1`
-
----
-
-## Plans et documentation
-
-- `plans/rpi5_setup.md` - Plan d'installation sur Raspberry Pi 5
-- `scripts/setup_pi.sh` - Script d'installation automatise pour RPi5
-
----
-
-## Ressources
-
-- [LeRobot Documentation](https://huggingface.co/docs/lerobot)
-- [Tutorial complet](https://huggingface.co/docs/lerobot/tutorials)
-- [Teleoperation guide](https://huggingface.co/docs/lerobot/teleop)
-- [Dataset guide](https://huggingface.co/docs/lerobot/datasets)
+- **write() API** : `bus.write("Goal_Position", motor_name, value)` - nom du moteur AVANT la valeur
+- **Manette Xbox** : utiliser evdev, la manette se deconnecte souvent, toujours gerer la reconnexion
+- **Ports serie Linux** : `/dev/ttyACM0`, les numeros changent au rebranchement
+- **Calibration** : positions normalisees de -100 a +100

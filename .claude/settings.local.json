@@ -1,10 +1,11 @@
 {
   "permissions": {
     "allow": [
-      "Bash(conda activate:*)",
-      "Bash(lerobot-teleoperate:*)",
-      "Bash(lerobot-record:*)",
-      "Bash(lerobot:*)"
+      "Bash(ssh:*)",
+      "Bash(python3:*)",
+      "Bash(ls:*)",
+      "Bash(cat:*)",
+      "Bash(git:*)"
     ]
   }
 }
