@@ -5,12 +5,12 @@
 
 ---
 
-## Statut actuel - 2026-03-08 (SESSION 6)
+## Statut actuel - 2026-03-08 (SESSION 7)
 
 ### Ce qui est fait
 1. **Montage du robot** : Assemblage complet
 2. **Configuration des bras** :
-   - Bras 1 (gauche, ACM0) : 6 moteurs (ID 1-6), complet et fonctionnel
+   - Bras 1 (gauche, ACM0) : 6 moteurs (ID 1-6) + 2 roues (ID 7-8), complet et fonctionnel
    - Bras 2 (droit, ACM1) : 6 moteurs (ID 1-6), complet et fonctionnel
    - Calibration sauvegardee : `~/.cache/huggingface/lerobot/calibration/robots/so_follower/zarax.json`
    - Calibration leader : `~/.cache/huggingface/lerobot/calibration/teleoperators/so_leader/zarax.json`
@@ -30,7 +30,12 @@
 6. **Modele ACT (Windows)** :
    - Entraine sur 20,000 steps, loss 0.035
    - Uploade : `Zarax/act-zarax-v1`
-7. **SSD NVMe 1 To** :
+8. **Roues** :
+   - 2 moteurs STS3215 sur le bus du bras gauche (ACM0)
+   - Roue 1 : ID 7, Roue 2 : ID 8
+   - Testees et fonctionnelles
+   - Prevision : moteurs camera (pan/tilt) sur le bus du bras droit (a configurer)
+9. **SSD NVMe 1 To** :
    - Geekworm X1001 PCIe to M.2 NVMe Shield
    - Boot direct sur NVMe, sans carte SD
    - 916 Go total, ~859 Go disponibles
