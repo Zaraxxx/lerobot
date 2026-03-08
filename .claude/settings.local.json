@@ -10,7 +10,14 @@
       "Bash(curl -s https://api.github.com/repos/Zaraxxx/lerobot 2>&1 | head -5)",
       "Bash(curl -s https://api.github.com/repos/Zaraxxx/lerobot | grep -E '\"private\"|\"visibility\"')",
       "Bash(cd ~/lerobot_pi/lerobot && source ../venv/bin/activate && python3 -c \"\nfrom lerobot.motors.feetech import FeetechMotorsBus\nfrom lerobot.motors.motors_bus import Motor, MotorNormMode\n\nfor port in ['/dev/ttyACM0', '/dev/ttyACM1']:\n    print\\(f'=== {port} ==='\\)\n    motors = {}\n    for i in range\\(1, 7\\):\n        motors[f'motor_{i}'] = Motor\\(i, 'sts3215', MotorNormMode.RANGE_M100_100\\)\n    bus = FeetechMotorsBus\\(port=port, motors=motors\\)\n    bus.connect\\(\\)\n    for i in range\\(1, 7\\):\n        try:\n            pos = bus.read\\('Present_Position', f'motor_{i}'\\)\n            print\\(f'  Motor {i}: OK \\(pos={pos:.1f}\\)'\\)\n        except Exception as e:\n            print\\(f'  Motor {i}: PAS DE REPONSE'\\)\n    bus.disconnect\\(\\)\n\")",
-      "Bash(cd ~/lerobot_pi/lerobot && source ../venv/bin/activate && python3 ~/lerobot_pi/xbox_control.py)"
+      "Bash(cd ~/lerobot_pi/lerobot && source ../venv/bin/activate && python3 ~/lerobot_pi/xbox_control.py)",
+      "Bash(lsblk)",
+      "Read(//boot/firmware/**)",
+      "Bash(dmesg)",
+      "Bash(echo \"UUID=672d801e-da91-4c01-ad26-071b12adc56b /mnt/nvme ext4 defaults,noatime 0 2\" | sudo tee -a /etc/fstab)",
+      "Bash(sudo rpi-eeprom-config)",
+      "Bash(sudo umount /mnt/nvme)",
+      "Bash(sudo rsync -axv /boot/firmware/ /mnt/nvme_boot/ 2>&1 | tail -3)"
     ]
   }
 }

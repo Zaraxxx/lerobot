@@ -5,7 +5,7 @@
 
 ---
 
-## Statut actuel - 2026-03-07 (SESSION 5)
+## Statut actuel - 2026-03-08 (SESSION 6)
 
 ### Ce qui est fait
 1. **Montage du robot** : Assemblage complet
@@ -30,6 +30,11 @@
 6. **Modele ACT (Windows)** :
    - Entraine sur 20,000 steps, loss 0.035
    - Uploade : `Zarax/act-zarax-v1`
+7. **SSD NVMe 1 To** :
+   - Geekworm X1001 PCIe to M.2 NVMe Shield
+   - Boot direct sur NVMe, sans carte SD
+   - 916 Go total, ~859 Go disponibles
+   - Config PCIe dans `/boot/firmware/config.txt` : `dtparam=pciex1` + `dtparam=pciex1_gen=3`
 
 ### A faire
 - Changer le mapping de la manette Xbox (a definir)
@@ -39,6 +44,7 @@
 - **OS** : Linux Debian aarch64, Kernel 6.12.47
 - **Hostname** : PiRobot
 - **User** : zarax
+- **Stockage** : SSD NVMe 1 To (Geekworm X1001), boot sans carte SD
 - **Repo** : `~/lerobot_pi/lerobot/` (clone de https://github.com/Zaraxxx/lerobot)
 - **Venv** : `source ~/lerobot_pi/venv/bin/activate`
 - **Ports serie** : `/dev/ttyACM0` (change selon branchement)
