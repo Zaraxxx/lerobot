@@ -1,3 +1,9 @@
+---
+name: lerobot-calibrate
+description: Calibration des moteurs du robot
+user-invocable: true
+---
+
 # Calibration Moteurs LeRobot
 
 Lance la calibration des moteurs du robot.

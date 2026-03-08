@@ -1,3 +1,9 @@
+---
+name: lerobot-cameras
+description: Verification des cameras connectees
+user-invocable: true
+---
+
 # Verification Cameras LeRobot
 
 Verifie les cameras connectees au systeme.

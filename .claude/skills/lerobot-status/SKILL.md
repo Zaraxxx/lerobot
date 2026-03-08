@@ -1,3 +1,9 @@
+---
+name: lerobot-status
+description: Diagnostic systeme complet du robot
+user-invocable: true
+---
+
 # Diagnostic Systeme LeRobot
 
 Execute un diagnostic complet du systeme. Lance les commandes suivantes et presente un rapport clair :

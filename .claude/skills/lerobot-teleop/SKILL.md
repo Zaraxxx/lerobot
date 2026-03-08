@@ -1,3 +1,9 @@
+---
+name: lerobot-teleop
+description: Teleoperation leader/follower
+user-invocable: true
+---
+
 # Teleoperation LeRobot
 
 Lance la teleoperation leader/follower.

@@ -1,3 +1,9 @@
+---
+name: lerobot-record
+description: Enregistrement de donnees (dataset)
+user-invocable: true
+---
+
 # Enregistrement de Donnees LeRobot
 
 Lance l'enregistrement d'episodes pour creer un dataset.

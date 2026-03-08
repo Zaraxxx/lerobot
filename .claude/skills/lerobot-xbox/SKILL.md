@@ -1,3 +1,9 @@
+---
+name: lerobot-xbox
+description: Controle du robot via manette Xbox
+user-invocable: true
+---
+
 # Controle Manette Xbox
 
 Lance le script de controle du robot via la manette Xbox.

@@ -1,3 +1,9 @@
+---
+name: lerobot-help-skills
+description: Liste les skills LeRobot disponibles
+user-invocable: true
+---
+
 # Aide Skills LeRobot
 
 Liste les skills disponibles et explique comment les utiliser.
