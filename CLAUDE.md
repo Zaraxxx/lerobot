@@ -10,8 +10,8 @@
 ### Ce qui est fait
 1. **Montage du robot** : Assemblage complet
 2. **Configuration des bras** :
-   - Bras 1 : 4 moteurs (ID 1-4), 2 moteurs manquants (5, 6)
-   - Bras 2 : 6 moteurs (ID 1-6), complet et fonctionnel
+   - Bras 1 (gauche, ACM0) : 6 moteurs (ID 1-6), complet et fonctionnel
+   - Bras 2 (droit, ACM1) : 6 moteurs (ID 1-6), complet et fonctionnel
    - Calibration sauvegardee : `~/.cache/huggingface/lerobot/calibration/robots/so_follower/zarax.json`
    - Calibration leader : `~/.cache/huggingface/lerobot/calibration/teleoperators/so_leader/zarax.json`
 3. **RPi5 operationnel** :
@@ -33,7 +33,6 @@
 
 ### A faire
 - Changer le mapping de la manette Xbox (a definir)
-- Ajouter le controle du deuxieme bras (4 moteurs)
 - Reduire la vitesse si necessaire
 
 ### Environnement Raspberry Pi
